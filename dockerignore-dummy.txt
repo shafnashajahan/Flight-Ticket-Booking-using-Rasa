@@ -1,0 +1,5 @@
+.gitignore
+.git
+.env
+models
+__pycache__

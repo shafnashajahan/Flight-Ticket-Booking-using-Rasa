@@ -1,0 +1,40 @@
+version: '3'
+services:
+  rasa_actions:
+    container_name: rasa_action_server
+    image: flight_chatbot_rasa
+    build: Rasa/
+    env_file:
+      - ./.env
+    ports:
+      - "5055:5055"
+    expose:
+      - "5055"
+    command: 'run actions'
+  rasa_run:
+    container_name: rasa_run_server
+    image: flight_chatbot_rasa
+    command: 'run --cors "*" --enable-api'
+    volumes:
+      - ./RASA/rasa_main/models:/usr/src/app/chatbot/Rasa/rasa_main/models
+    ports:
+      - "5005:5005"
+    expose:
+      - "5005"
+    depends_on:
+      - rasa_actions
+  flask_app:
+    container_name: flask_rasa_UI_server
+    image: flight_flask
+    build: Flask/
+    ports:
+      - "5000:5000"
+    command: 'python app.py'
+    depends_on:
+      - rasa_run
+  rasa_train:
+    container_name: rasa_train_model
+    image: flight_chatbot_rasa
+    volumes:
+      - ./RASA/rasa_main/models:/usr/src/app/chatbot/Rasa/rasa_main/models
+    command: 'train --fixed-model-name model_in_use'
