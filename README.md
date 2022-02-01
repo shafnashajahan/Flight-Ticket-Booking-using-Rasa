@@ -1,5 +1,4 @@
 # Rasa_flight_tickets
-Mirafra's RASA Chatbot for booking flight tickets | flask backend
 
 Steps to run:
 
@@ -27,8 +26,8 @@ or
 3. rasa run actions
 
 Sample flight ticket requirements:
-- name: Vishal
-- contact number: 9898989898
+- name: shafna
+- contact number: 8908909878
 - From: mumbai
 - To: london
 - departueDate: 2021-11-10
